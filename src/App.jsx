@@ -33,34 +33,38 @@ const App = () => {
     const sortData = (col) => {
         // ASC (по умолчанию) устанавливает порядок сортировки по возрастанию, от меньших значений к большим
         // DESC устанавливает порядок сортировки по убыванию, от больших значений к меньшим
-        if (sort === "ASC") {
+        if (typeof countries[0][col] == "number") {
             let sorted = [];
-            if (typeof countries[0][col] == "number") {
+            if (sort === "ASC") {
                 /*сортировка массива по убыванию*/
                 sorted = [...countries].sort((a, b) =>
                     b[col] - a[col]
                 );
-            } else if (typeof countries[0][col] == "string") {
-                sorted = [...countries].sort((a, b) =>
-                    a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
-                );
-            }
-            setCountries(sorted);
-            setSort("DSC")
-        } else if (sort === "DSC") {
-            let sorted = [];
-            if (typeof countries[0][col] == "number") {
+                setSort("DSC");
+            } else {
                 /*сортировка массива по возрастанию*/
                 sorted = [...countries].sort((a, b) =>
                     a[col] - b[col]
                 );
-            } else if (typeof countries[0][col] == "string") {
+                setSort("ASC");
+            }
+            setCountries(sorted);
+        } else {
+            let sorted = [];
+            if (sort === "ASC") {
+                /*сортировка массива по убыванию*/
+                sorted = [...countries].sort((a, b) =>
+                    a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
+                );
+                setSort("DSC");
+            } else {
+                /*сортировка массива по возрастанию*/
                 sorted = [...countries].sort((a, b) =>
                     a[col].toLowerCase() < b[col].toLowerCase() ? 1 : -1
                 );
+                setSort("ASC");
             }
             setCountries(sorted);
-            setSort("ASC")
         }
     };
 
